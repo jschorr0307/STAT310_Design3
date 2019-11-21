@@ -1,0 +1,76 @@
+---
+title: 'STAT 310 Design #3'
+author: "Jerri Schorr"
+date: "November 21, 2019"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r include = FALSE}
+library(readr)
+library(ggplot2)
+edattain <- read_csv("IPUMS-Sex-EdAttain.csv")
+sexage <- read_csv("IPUMS-Sex-Age.csv")
+
+```
+
+```{r include = FALSE}
+#z <- ifelse(sexage$Sex == "F", 0, 1)
+y <- sexage$Year[which(sexage$Sex=="Female")]
+x <- sexage$Age[which(sexage$Sex=="Female")]
+z <- sexage$Age[which(sexage$Sex=="Male")]
+
+
+```
+
+```{r echo = FALSE}
+library(ggplot2)
+
+sexageUS <- sexage[which(sexage$Country=="United States"), ]
+#esquisse::esquisser(sexageUS)
+
+ggplot(sexageUS) +
+ aes(x = Age, y = Year, colour = Sex, size = Count) +
+ geom_point() +
+ scale_color_hue() +
+ labs(title = "Age Distribution in the U.S. by Gender")+
+ theme_minimal() +
+ facet_wrap(vars(Sex))
+```
+
+```{r echo = FALSE}
+library(ggplot2)
+library(esquisse)
+
+edattainUS <- edattain[which(edattain$Country=="United States"), ]
+#esquisse::esquisser(edattainUS)
+
+ggplot(edattainUS) +
+ aes(x = Year, y = Count, colour = Sex) +
+ geom_line(size = 1L) +
+ scale_color_hue() +
+ labs(title = "Education Attained per Year", subtitle = "Grouped by Gender") +
+ theme_minimal() +
+ facet_wrap(vars(EdAttain))
+```
+
+1. How has the age distribution in the U.S. changed over time, for both males and females?
+
+    + Over the years men have lived shorter than women. Both men and women have lived longer over the years.
+
+2. How has educational attainment in the U.S. changed over time? 
+
+    + There's an increase in higher education attainment throug the years.
+
+3. Historically, has there been inequity across males and females with regard to the highest level of educational attainment?
+
+    + Yes, in the 1960's men were the ones attaining university degrees. After 2005 women started to attain more university degrees than men. 
+
+4. How has any inequity across sex in educational attainment changed over time, if at all?
+
+    + Less than primary school attainment has stayed pretty even through the years. Primary or less completed was greater for women than men in the 1960's but became even between genders in 2010. Secondary education attainment has had more women than men over the years. Finally, University completion had more males in the past, while it currently has more women than men. 
+
+
+
+
